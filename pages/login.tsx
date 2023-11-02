@@ -3,7 +3,22 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import { NextPage } from 'next';
 
 const Login: NextPage = () => {
+
+  // セッション情報取得
   const { data: session } = useSession();
+
+  // セッション情報をバックエンドに渡す
+  async function sendUserInfoToBackend(): Promise<void> {
+    try {
+      const response = await fetch('/api/sendUserInfo', {
+        method: 'POST'
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Failed to send user info to backend', error);
+    }
+  }
 
   return (
     <>
